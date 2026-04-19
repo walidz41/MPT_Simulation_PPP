@@ -47,11 +47,11 @@ TagManager:
   - name: Walkinfront
     uniqueID: 2032685377
     locked: 0
-  - name: Collision
-    uniqueID: 4159853063
-    locked: 0
   - name: Player
     uniqueID: 3568730447
+    locked: 0
+  - name: Collision
+    uniqueID: 4159853063
     locked: 0
   - name: WalkBehind
     uniqueID: 2652114337
