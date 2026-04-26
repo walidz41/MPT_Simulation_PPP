@@ -77,8 +77,17 @@ public class itemdraghandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
-        Vector2 randomOffset = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        // --- THE FIX IS HERE ---
+        // 1. Define a minimum and maximum throw distance
+        float minDropDistance = 1.5f; 
+        float maxDropDistance = 2.5f;
+
+        // 2. Pick a random direction, then multiply it by our safe distance
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        Vector2 randomOffset = randomDirection * Random.Range(minDropDistance, maxDropDistance);
+        
         Vector2 dropPosition = (Vector2)player.transform.position + randomOffset;
+        // -----------------------
 
         if (physicalItemPrefab != null)
         {
@@ -102,5 +111,5 @@ public class itemdraghandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         // Destroy the UI item from the inventory
         Destroy(gameObject);
-    }   
+    }
 }
