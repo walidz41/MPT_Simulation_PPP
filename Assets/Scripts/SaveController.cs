@@ -5,6 +5,7 @@ using UnityEngine;
 public class SaveController : MonoBehaviour
 {
     private string saveLocation;
+    private InventoryController inventoryController;
     
     // Cache these references to improve performance
     private GameObject player;
@@ -14,6 +15,7 @@ public class SaveController : MonoBehaviour
     {
         // Define the save location
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json"); 
+        inventoryController = FindObjectOfType<InventoryController>();
         
         // Find our objects once at the start
         player = GameObject.FindGameObjectWithTag("Player");
@@ -40,7 +42,8 @@ public class SaveController : MonoBehaviour
         SaveData saveData = new SaveData()
         {
             playerPosition = player.transform.position,
-            mapBoundary = boundaryName
+            mapBoundary = boundaryName,
+            inventorySaveData = inventoryController.GetInventoryItems() // Get the current inventory state
         };
 
         // Convert the data object to JSON and write it to the file
@@ -71,6 +74,7 @@ public class SaveController : MonoBehaviour
                 if (boundaryObj != null && confiner != null)
                 {
                     confiner.BoundingShape2D = boundaryObj.GetComponent<PolygonCollider2D>(); 
+                    inventoryController.SetInventoryItems(data.inventorySaveData); // Restore the inventory state
                 }
             }
         }
